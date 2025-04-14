@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+
+// Import des controllers authController et userController et du middleware auth
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const auth = require('../middlewares/auth');

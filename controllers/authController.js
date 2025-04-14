@@ -5,6 +5,7 @@ const User = require('../models/users');
 const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_DURATION_DAYS = 30;
 
+
 exports.register = async (req, res) => {
     const { username, email, password, firstname, lastname, birthdate } = req.body;
     if (!username || !email || !password || !firstname || !lastname || !birthdate) {
