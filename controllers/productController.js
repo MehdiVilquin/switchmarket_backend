@@ -1,4 +1,5 @@
 const Product = require('../models/products');
+const Additive = require('../models/additives');
 
 exports.searchProducts = (req, res) => {
   const { all, brand, label, ingredient, additive } = req.query;
