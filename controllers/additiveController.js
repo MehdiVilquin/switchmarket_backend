@@ -34,7 +34,7 @@ exports.getAdditiveById = async (req, res) => {
 
 // GET random additives
 exports.getRandomAdditives = async (req, res) => {
-    const count = parseInt(req.params.count) || 4;
+    const count = parseInt(req.params.count) || 6;
 
     try {
         const randomAdditives = await Additive.aggregate([{ $sample: { size: count } }]);

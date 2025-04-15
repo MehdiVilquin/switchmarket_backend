@@ -83,16 +83,15 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.getRandomProducts = async (req, res) => {
-  const count = parseInt(req.query.count) || 6; // nombre de produits à récupérer, par défaut 6
+  // Si la route est /random/:count?, utilise req.params.count
+  const count = req.params.count ? parseInt(req.params.count) : 6;
 
   try {
-    const randomProducts = await Product.aggregate([
-      { $sample: { size: count } }
-    ]);
-
+    const randomProducts = await Product.aggregate([{ $sample: { size: count } }]);
     res.json({ result: true, products: randomProducts });
   } catch (error) {
     console.error(error);
     res.status(500).json({ result: false, error: "Erreur lors de la récupération de produits aléatoires" });
   }
-}
+};
+
