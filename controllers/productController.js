@@ -2,11 +2,13 @@ const Product = require('../models/products');
 const Additive = require('../models/additives');
 
 exports.searchProducts = (req, res) => {
+  // Récupération des paramètres de recherche depuis la requête
   const { all, brand, label, ingredient, additive } = req.query;
-
+  
+  // On initialise un tableau pour stocker les filtres
   const filters = [];
 
-  if (all) {
+  if (all) { // si le paramètre "all" est utilisé, elle est appliquée à tous les champs
     const regex = new RegExp(all, 'i');
     filters.push({
       $or: [ // Utilisation de $or pour combiner plusieurs conditions
@@ -18,15 +20,16 @@ exports.searchProducts = (req, res) => {
       ]
     });
   }
-
+  // Si le paramètre "all" n'est pas utilisé, on applique les autres filtres individuellement
   if (brand) {
     filters.push({ brands: new RegExp(brand, 'i') });
   }
-
+  
+  // Si le paramètre "label" est utilisé, on applique le filtre sur les labels
   if (label) {
     filters.push({ labeltags: label });
   }
-
+  // Si le paramètre "ingredient" est utilisé, on applique le filtre sur les ingrédients
   if (ingredient) {
     filters.push({
       ingredients: {
@@ -34,13 +37,17 @@ exports.searchProducts = (req, res) => {
       }
     });
   }
-
+ // Si le paramètre "additive" est utilisé, on applique le filtre sur les additifs
   if (additive) {
     filters.push({ 'additives.tag': additive });
   }
 
+  // On vérifie si des filtres ont été ajoutés
+  // Si aucun filtre n'est spécifié, on renvoie tous les produits
+  // Si des filtres sont spécifiés, on construit la requête
   const query = filters.length > 0 ? { $and: filters } : {};
 
+  // On effectue la recherche dans la base de données
   Product.find(query)
     .populate('additives.additiveRef') // Remplacez par le bon champ de référence si nécessaire
     .then(data => {
