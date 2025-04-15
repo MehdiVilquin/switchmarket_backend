@@ -87,3 +87,17 @@ exports.getProductById = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
+
+exports.getRandomProducts = async (req, res) => {
+  // Si la route est /random/:count?, utilise req.params.count
+  const count = req.params.count ? parseInt(req.params.count) : 6;
+
+  try {
+    const randomProducts = await Product.aggregate([{ $sample: { size: count } }]);
+    res.json({ result: true, products: randomProducts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ result: false, error: "Erreur lors de la récupération de produits aléatoires" });
+  }
+};
+
