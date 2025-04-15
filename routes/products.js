@@ -8,6 +8,8 @@ router.get("/", productController.searchProducts);
 
 module.exports = router;
 
+router.get("/random", productController.getRandomProducts)
+
 // Route : GET /products/:id
 router.get("/:id", productController.getProductById);
 

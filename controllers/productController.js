@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 exports.searchProducts = (req, res) => {
   // Récupération des paramètres de recherche depuis la requête
   const { all, brand, label, ingredient, additive } = req.query;
-  
+
   // On initialise un tableau pour stocker les filtres
   const filters = [];
 
@@ -26,7 +26,7 @@ exports.searchProducts = (req, res) => {
   if (brand) {
     filters.push({ brands: new RegExp(brand, 'i') });
   }
-  
+
   // Si le paramètre "label" est utilisé, on applique le filtre sur les labels
   if (label) {
     filters.push({ labeltags: label });
@@ -39,7 +39,7 @@ exports.searchProducts = (req, res) => {
       }
     });
   }
- // Si le paramètre "additive" est utilisé, on applique le filtre sur les additifs
+  // Si le paramètre "additive" est utilisé, on applique le filtre sur les additifs
   if (additive) {
     filters.push({ 'additives.tag': additive });
   }
@@ -81,3 +81,18 @@ exports.getProductById = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
+
+exports.getRandomProducts = async (req, res) => {
+  const count = parseInt(req.query.count) || 6; // nombre de produits à récupérer, par défaut 6
+
+  try {
+    const randomProducts = await Product.aggregate([
+      { $sample: { size: count } }
+    ]);
+
+    res.json({ result: true, products: randomProducts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ result: false, error: "Erreur lors de la récupération de produits aléatoires" });
+  }
+}
