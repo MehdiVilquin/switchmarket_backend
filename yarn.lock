@@ -1149,6 +1149,11 @@ diff-sequences@^29.6.3:
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-29.6.3.tgz"
   integrity sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==
 
+dot-env@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/dot-env/-/dot-env-0.0.1.tgz#e4434cb8c69143e445bc28a729437e4fabd88c80"
+  integrity sha512-SajHtzm3v7yjMH8DW9xY+4i7Zv/cN3aMtLVy0mRMuZu8L9qRCR7CNqcl4KBbG27e5Up4BpSlEyPXXLNbSAe2DQ==
+
 dotenv@^16.5.0:
   version "16.5.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.5.0.tgz#092b49f25f808f020050051d1ff258e404c78692"

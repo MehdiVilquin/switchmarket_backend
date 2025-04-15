@@ -1,5 +1,7 @@
 const Product = require('../models/products');
 const Additive = require('../models/additives');
+const mongoose = require('mongoose');
+
 
 exports.searchProducts = (req, res) => {
   // Récupération des paramètres de recherche depuis la requête
@@ -57,4 +59,25 @@ exports.searchProducts = (req, res) => {
       console.error(error);
       res.json({ result: false, error: 'Erreur lors de la recherche des produits' });
     });
+};
+
+exports.getProductById = async (req, res) => {
+  const { id } = req.params;
+
+  // Vérifie que l'ID est un ObjectId valide
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'ID invalide' });
+  }
+
+  try {
+    const product = await Product.findById(id).populate('additives.additiveRef');
+
+    if (!product) {
+      return res.status(404).json({ message: 'Produit non trouvé' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
 };

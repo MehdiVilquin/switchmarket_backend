@@ -7,3 +7,7 @@ const productController = require("../controllers/productController");
 router.get("/", productController.searchProducts);
 
 module.exports = router;
+
+// Route : GET /products/:id
+router.get("/:id", productController.getProductById);
+
