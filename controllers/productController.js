@@ -1,4 +1,5 @@
 const Product = require("../models/products")
+const Label = require("../models/labels");
 const mongoose = require("mongoose")
 
 /**
@@ -29,65 +30,96 @@ exports.getProductById = async (req, res) => {
  * Ajout de pagination avec page et limit
  */
 exports.searchProducts = async (req, res) => {
-  const { all, brand, label, ingredient, additive, page = 1, limit = 10 } = req.query
-  const filters = []
+  const {
+    all,
+    brand,
+    label,
+    labels,
+    categories,
+    ingredient,
+    additive,
+    page = 1,
+    limit = 10,
+    mode = "or"
+  } = req.query;
 
-  if (all) {
-    const regex = new RegExp(all, "i")
-    filters.push({
-      $or: [
-        { product_name: regex },
-        { brands: regex },
-        { labeltags: regex },
-        { "ingredients.text": regex },
-        { "additives.tag": regex },
-      ],
-    })
-  }
-  if (brand) {
-    filters.push({ brands: new RegExp(brand, "i") })
-  }
-  if (label) {
-    filters.push({ labeltags: label })
-  }
-  if (ingredient) {
-    filters.push({
-      ingredients: { $elemMatch: { text: new RegExp(ingredient, "i") } },
-    })
-  }
-  if (additive) {
-    filters.push({ "additives.tag": additive })
-  }
-
-  // Si aucun filtre n'est fourni, on retourne tous les produits
-  const query = filters.length > 0 ? { $and: filters } : {}
+  const filters = [];
 
   try {
-    // Calculate pagination
-    const skip = (Number.parseInt(page) - 1) * Number.parseInt(limit)
-    const limitNum = Number.parseInt(limit)
+    // 🔍 Recherche full-text sur plusieurs champs
+    if (all) {
+      const regex = new RegExp(all, "i");
+      filters.push({
+        $or: [
+          { product_name: regex },
+          { brands: regex },
+          { labeltags: regex },
+          { "ingredients.text": regex },
+          { "additives.tag": regex },
+        ],
+      });
+    }
 
-    // Only populate additiveRef, not effects since Effect model doesn't exist
-    const products = await Product.find(query).skip(skip).limit(limitNum).populate("additives.additiveRef")
+    // 🔍 Filtres simples
+    if (brand) filters.push({ brands: new RegExp(brand, "i") });
+    if (label) filters.push({ labeltags: label });
+    if (ingredient) {
+      filters.push({
+        ingredients: { $elemMatch: { text: new RegExp(ingredient, "i") } },
+      });
+    }
+    if (additive) filters.push({ "additives.tag": additive });
 
-    // Get total count for pagination info
-    const total = await Product.countDocuments(query)
+    // 🔍 Filtres combinés par labels ou catégories
+    let labelIds = [];
+
+    if (categories) {
+      const categoryList = categories.split(',').map(c => c.trim());
+      const categoryLabels = await Label.find({ categories: { $in: categoryList } }).select('_id');
+      labelIds.push(...categoryLabels.map(label => label._id));
+    }
+
+    if (labels) {
+      const labelList = labels.split(',').map(l => l.trim());
+      labelIds.push(...labelList);
+    }
+
+    if (labelIds.length > 0) {
+      labelIds = [...new Set(labelIds)]; // dédoublonner
+      filters.push({
+        labeltags: mode === "and"
+          ? { $all: labelIds }
+          : { $in: labelIds }
+      });
+    }
+
+    const query = filters.length > 0 ? { $and: filters } : {};
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const limitNum = parseInt(limit);
+
+    const products = await Product.find(query)
+      .skip(skip)
+      .limit(limitNum)
+      .populate("additives.additiveRef");
+
+    const total = await Product.countDocuments(query);
 
     res.json({
       result: true,
       products,
       pagination: {
         total,
-        page: Number.parseInt(page),
+        page: parseInt(page),
         limit: limitNum,
         pages: Math.ceil(total / limitNum),
       },
-    })
+    });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ result: false, error: "Erreur lors de la recherche des produits" })
+    console.error("❌ Erreur dans searchProducts:", error);
+    res.status(500).json({ result: false, error: "Erreur lors de la recherche des produits" });
   }
-}
+};
 
 /**
  * Récupérer un échantillon aléatoire de produits
@@ -123,3 +155,4 @@ exports.getAllProducts = async (req, res) => {
     res.status(500).json({ result: false, error: "Erreur lors de la récupération des produits" })
   }
 }
+

@@ -17,7 +17,7 @@ const ProductSchema = new Schema({
   product_name: { type: String, required: true },
   brands: { type: String },
   ingredients: [IngredientSchema],
-  labeltags: [{ type: String }],
+  labeltags: [{ type: String,ref: 'Label' }], // anciennement : labeltags: [{ type: String }], (désormais on reference vers le modèle Label)
   completion_score: { type: String },
   additives: [AdditiveSchema],
   naturalPercentage: { type: Number, required: true },
@@ -25,4 +25,4 @@ const ProductSchema = new Schema({
   effects: [{ type: Schema.Types.ObjectId, ref: 'Effect' }]
 });
 
-module.exports = mongoose.model('Product', ProductSchema);
+module.exports = mongoose.model('Product', ProductSchema,'products');
