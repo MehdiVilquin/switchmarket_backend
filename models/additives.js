@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const additiveSchema = new mongoose.Schema(
   {
@@ -30,4 +30,4 @@ const additiveSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Additive", additiveSchema);
+module.exports = mongoose.model("Additive", additiveSchema);
