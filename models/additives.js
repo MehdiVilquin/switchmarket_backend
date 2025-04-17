@@ -10,4 +10,4 @@ const AdditiveSchema = new Schema({
   risk: String
 });
 
-module.exports = mongoose.model('Additive', AdditiveSchema);
+module.exports = mongoose.model('Additive', AdditiveSchema,'additives');

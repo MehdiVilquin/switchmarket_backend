@@ -7,4 +7,5 @@ const EffectSchema = new Schema({
   score: { type: Number, required: true, min: -10, max: 10 }
 });
 
-module.exports = mongoose.model('Effect', EffectSchema);
+module.exports = mongoose.model('Effect', EffectSchema,'effects');
+
