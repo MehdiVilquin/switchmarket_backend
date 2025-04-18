@@ -10,6 +10,7 @@ exports.getMe = (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         birthdate: user.birthdate,
+        role: user.role, // Ajout du rôle dans la réponse
     })
 }
 
@@ -66,6 +67,65 @@ exports.updateProfile = async (req, res) => {
                 firstname: updatedUser.firstname,
                 lastname: updatedUser.lastname,
                 birthdate: updatedUser.birthdate,
+                role: updatedUser.role, // Ajout du rôle dans la réponse
+            },
+        })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// Nouvelle fonction pour promouvoir un utilisateur en administrateur (réservée aux administrateurs)
+exports.promoteToAdmin = async (req, res) => {
+    try {
+        const { userId } = req.params
+
+        // Vérifier si l'utilisateur existe
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" })
+        }
+
+        // Mettre à jour le rôle de l'utilisateur
+        user.role = "admin"
+        await user.save()
+
+        res.status(200).json({
+            message: "Utilisateur promu en administrateur avec succès",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            },
+        })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// Nouvelle fonction pour rétrograder un administrateur en utilisateur normal (réservée aux administrateurs)
+exports.demoteToUser = async (req, res) => {
+    try {
+        const { userId } = req.params
+
+        // Vérifier si l'utilisateur existe
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" })
+        }
+
+        // Mettre à jour le rôle de l'utilisateur
+        user.role = "user"
+        await user.save()
+
+        res.status(200).json({
+            message: "Administrateur rétrogradé en utilisateur avec succès",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
             },
         })
     } catch (err) {

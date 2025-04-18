@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const mongoose = require("mongoose")
+const { Schema } = mongoose
 
 const userSchema = new Schema(
     {
@@ -16,7 +16,7 @@ const userSchema = new Schema(
             unique: true,
             trim: true,
             lowercase: true,
-            match: [/.+@.+\..+/, 'Veuillez entrer une adresse email valide'],
+            match: [/.+@.+\..+/, "Veuillez entrer une adresse email valide"],
         },
         passwordHash: {
             type: String,
@@ -37,7 +37,7 @@ const userSchema = new Schema(
                         type: Date,
                         required: true,
                     },
-                }
+                },
             ],
             default: [],
         },
@@ -55,10 +55,15 @@ const userSchema = new Schema(
             type: Date,
             required: true,
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user",
+        },
     },
     {
         timestamps: true,
-    }
-);
+    },
+)
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema)
