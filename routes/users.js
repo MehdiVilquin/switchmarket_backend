@@ -5,10 +5,15 @@ const router = express.Router()
 const authController = require("../controllers/authController")
 const userController = require("../controllers/userController")
 const auth = require("../middlewares/auth")
+const isAdmin = require("../middlewares/isAdmin")
 
 router.post("/register", authController.register)
 router.post("/login", authController.login)
 router.get("/me", auth, userController.getMe)
 router.put("/update", auth, userController.updateProfile)
+
+// Nouvelles routes pour la gestion des administrateurs
+router.put("/promote/:userId", auth, isAdmin, userController.promoteToAdmin)
+router.put("/demote/:userId", auth, isAdmin, userController.demoteToUser)
 
 module.exports = router

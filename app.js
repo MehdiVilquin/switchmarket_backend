@@ -12,6 +12,7 @@ var usersRouter = require("./routes/users");
 var productsRouter = require("./routes/products");
 var additivesRouter = require("./routes/additives");
 var labelsRouter = require("./routes/labels");
+var contributionsRouter = require("./routes/contributions")
 
 
 var app = express();
@@ -34,5 +35,6 @@ app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/additives", additivesRouter);
 app.use("/labels", labelsRouter);
+app.use("/contributions", contributionsRouter)
 
 module.exports = app;
