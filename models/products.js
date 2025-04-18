@@ -20,7 +20,6 @@ const ProductSchema = new Schema({
   labeltags: [{ type: String,ref: 'Label' }], // anciennement : labeltags: [{ type: String }], (désormais on reference vers le modèle Label)
   completion_score: { type: Number },
   additives: [AdditiveSchema],
-  naturalPercentage: { type: Number, required: true },
   chemicalPercentage: { type: Number, required: true },
   effects: [{ type: Schema.Types.ObjectId, ref: 'Effect' }]
 });
