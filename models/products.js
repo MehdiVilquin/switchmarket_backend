@@ -18,7 +18,7 @@ const ProductSchema = new Schema({
   brands: { type: String },
   ingredients: [IngredientSchema],
   labeltags: [{ type: String,ref: 'Label' }], // anciennement : labeltags: [{ type: String }], (désormais on reference vers le modèle Label)
-  completion_score: { type: String },
+  completion_score: { type: Number },
   additives: [AdditiveSchema],
   naturalPercentage: { type: Number, required: true },
   chemicalPercentage: { type: Number, required: true },
