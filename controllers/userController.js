@@ -132,3 +132,36 @@ exports.demoteToUser = async (req, res) => {
         res.status(500).json({ error: err.message })
     }
 }
+
+exports.getAllUsers = async (req, res) => {
+    try {
+      const users = await User.find({}, '-passwordHash -tokens')
+      res.status(200).json({ users })
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  }
+  
+  exports.deleteUser = async (req, res) => {
+    try {
+      const { userId } = req.params
+      
+      // Don't allow deleting yourself
+      if (userId === req.user._id.toString()) {
+        return res.status(400).json({ message: "You cannot delete your own account" })
+      }
+      
+      // Check if user exists
+      const user = await User.findById(userId)
+      if (!user) {
+        return res.status(404).json({ message: "User not found" })
+      }
+      
+      // Delete the user
+      await User.findByIdAndDelete(userId)
+      
+      res.status(200).json({ message: "User deleted successfully" })
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  }
