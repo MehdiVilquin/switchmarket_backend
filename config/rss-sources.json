@@ -1,0 +1,90 @@
+{
+  "sources": [
+    {
+      "name": "Sustainable Jungle",
+      "url": "https://www.sustainablejungle.com/feed/",
+      "tier": 1,
+      "category": "sustainable-beauty",
+      "enabled": true
+    },
+    {
+      "name": "EcoCult",
+      "url": "https://ecocult.com/feed/",
+      "tier": 1,
+      "category": "sustainable-beauty",
+      "enabled": true
+    },
+    {
+      "name": "Mind Body Green",
+      "url": "https://www.mindbodygreen.com/rss/beauty.xml",
+      "tier": 1,
+      "category": "wellness-beauty",
+      "enabled": true
+    },
+    {
+      "name": "Allure",
+      "url": "https://www.allure.com/feed/rss",
+      "tier": 1,
+      "category": "mainstream-beauty",
+      "enabled": true
+    },
+    {
+      "name": "The Good Trade",
+      "url": "https://www.thegoodtrade.com/feed",
+      "tier": 2,
+      "category": "sustainable-beauty",
+      "enabled": true
+    },
+    {
+      "name": "Ethical Unicorn",
+      "url": "https://ethicalunicorn.com/feed/",
+      "tier": 2,
+      "category": "sustainable-beauty",
+      "enabled": true
+    },
+    {
+      "name": "Organic Authority",
+      "url": "https://www.organicauthority.com/feed",
+      "tier": 2,
+      "category": "organic-beauty",
+      "enabled": true
+    },
+    {
+      "name": "Goop Beauty",
+      "url": "https://goop.com/beauty/feed/",
+      "tier": 3,
+      "category": "wellness-beauty",
+      "enabled": true
+    },
+    {
+      "name": "EWG",
+      "url": "https://www.ewg.org/rss.xml",
+      "tier": 3,
+      "category": "ingredient-safety",
+      "enabled": false
+    },
+    {
+      "name": "Beauty Independent",
+      "url": "https://www.beautyindependent.com/feed/",
+      "tier": 3,
+      "category": "industry-news",
+      "enabled": false
+    },
+    {
+      "name": "Byrdie",
+      "url": "https://www.byrdie.com/rss",
+      "tier": 3,
+      "category": "mainstream-beauty",
+      "enabled": false,
+      "error": "Status code 404"
+    },
+    {
+      "name": "Treehugger Beauty",
+      "url": "https://www.treehugger.com/beauty-personal-care/rss.xml",
+      "tier": 3,
+      "category": "sustainable-beauty",
+      "enabled": false,
+      "error": "Status code 404"
+    }
+  ]
+}
