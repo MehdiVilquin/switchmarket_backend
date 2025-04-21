@@ -156,3 +156,83 @@ exports.getAllProducts = async (req, res) => {
   }
 }
 
+
+
+exports.createProduct = async (req, res) => {
+  try {
+    const productData = req.body
+
+    // Validation des données
+    if (!productData.product_name) {
+      return res.status(400).json({ result: false, message: "Le nom du produit est requis" })
+    }
+
+    // Création du produit
+    const newProduct = new Product(productData)
+    await newProduct.save()
+
+    res.status(201).json({ result: true, message: "Produit créé avec succès", product: newProduct })
+  } catch (error) {
+    console.error("Erreur lors de la création du produit:", error)
+    res.status(500).json({ result: false, error: "Erreur lors de la création du produit" })
+  }
+}
+
+/**
+ * Mettre à jour un produit existant
+ */
+exports.updateProduct = async (req, res) => {
+  const { id } = req.params
+  const updates = req.body
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ result: false, message: "ID invalide" })
+  }
+
+  try {
+    // Vérifier si le produit existe
+    const product = await Product.findById(id)
+    if (!product) {
+      return res.status(404).json({ result: false, message: "Produit non trouvé" })
+    }
+
+    // Mettre à jour le produit
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      updates,
+      { new: true, runValidators: true }
+    ).populate("additives.additiveRef")
+
+    res.json({ result: true, message: "Produit mis à jour avec succès", product: updatedProduct })
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du produit:", error)
+    res.status(500).json({ result: false, error: "Erreur lors de la mise à jour du produit" })
+  }
+}
+
+/**
+ * Supprimer un produit
+ */
+exports.deleteProduct = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ result: false, message: "ID invalide" })
+  }
+
+  try {
+    // Vérifier si le produit existe
+    const product = await Product.findById(id)
+    if (!product) {
+      return res.status(404).json({ result: false, message: "Produit non trouvé" })
+    }
+
+    // Supprimer le produit
+    await Product.findByIdAndDelete(id)
+
+    res.json({ result: true, message: "Produit supprimé avec succès" })
+  } catch (error) {
+    console.error("Erreur lors de la suppression du produit:", error)
+    res.status(500).json({ result: false, error: "Erreur lors de la suppression du produit" })
+  }
+}
