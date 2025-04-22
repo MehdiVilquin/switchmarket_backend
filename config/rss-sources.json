@@ -5,42 +5,54 @@
       "url": "https://www.sustainablejungle.com/feed/",
       "tier": 1,
       "category": "sustainable-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:11.148Z"
     },
     {
       "name": "EcoCult",
       "url": "https://ecocult.com/feed/",
       "tier": 1,
       "category": "sustainable-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:16.154Z"
     },
     {
       "name": "Mind Body Green",
       "url": "https://www.mindbodygreen.com/rss/beauty.xml",
       "tier": 1,
       "category": "wellness-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:01.158Z"
     },
     {
       "name": "Allure",
       "url": "https://www.allure.com/feed/rss",
       "tier": 1,
       "category": "mainstream-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:06.164Z"
     },
     {
       "name": "The Good Trade",
       "url": "https://www.thegoodtrade.com/feed",
       "tier": 2,
       "category": "sustainable-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:24.255Z"
     },
     {
       "name": "Ethical Unicorn",
       "url": "https://ethicalunicorn.com/feed/",
       "tier": 2,
       "category": "sustainable-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:16.171Z"
     },
     {
       "name": "Organic Authority",
@@ -54,7 +66,9 @@
       "url": "https://goop.com/beauty/feed/",
       "tier": 3,
       "category": "wellness-beauty",
-      "enabled": true
+      "enabled": true,
+      "lastError": "Request timed out after 5000ms",
+      "lastErrorTime": "2025-04-21T21:31:33.330Z"
     },
     {
       "name": "EWG",
