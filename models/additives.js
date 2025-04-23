@@ -21,7 +21,7 @@ const additiveSchema = new mongoose.Schema(
     famille: { type: String },
     exemples_produits: { type: String },
     dja: { type: String },
-    allergie_possible: { type: String, enum: ["Oui", "Non"] },
+    allergie_possible: { type: String, enum: ["Yes", "No"] },
     commentaire: { type: String },
     note: { type: String },
   },
