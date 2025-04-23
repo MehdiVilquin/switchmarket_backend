@@ -12,6 +12,9 @@ router.post("/login", authController.login)
 router.get("/me", auth, userController.getMe)
 router.put("/update", auth, userController.updateProfile)
 
+router.get("/", auth, isAdmin, userController.getAllUsers)
+router.delete("/:userId", auth, isAdmin, userController.deleteUser)
+
 // Nouvelles routes pour la gestion des administrateurs
 router.put("/promote/:userId", auth, isAdmin, userController.promoteToAdmin)
 router.put("/demote/:userId", auth, isAdmin, userController.demoteToUser)
