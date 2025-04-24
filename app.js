@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("./models/connection");
 const cors = require("cors");
+const { FRONTEND_URL } = require("./config");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -19,7 +20,7 @@ var app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: FRONTEND_URL,
     credentials: true,
   })
 );
