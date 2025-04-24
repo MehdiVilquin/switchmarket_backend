@@ -13,6 +13,7 @@ var productsRouter = require("./routes/products");
 var additivesRouter = require("./routes/additives");
 var labelsRouter = require("./routes/labels");
 const effectsRouter = require("./routes/effects");
+var newsRouter = require("./routes/news");
 
 var app = express();
 
@@ -35,5 +36,6 @@ app.use("/products", productsRouter);
 app.use("/additives", additivesRouter);
 app.use("/labels", labelsRouter);
 app.use("/effects", effectsRouter);
+app.use("/news", newsRouter);
 
 module.exports = app;
