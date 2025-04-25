@@ -21,11 +21,14 @@ var app = express();
 // --- CORS configuration adaptée local/prod ---
 const allowedOrigins = [
   "http://localhost:3001",
-  "https://switchmarket-frontend.vercel.app"
+  "https://switchmarket-frontend.vercel.app",
 ];
 
 // Ajoute l'origine définie via la variable d'environnement (utile sur Vercel)
-if (process.env.FRONTEND_URL && !allowedOrigins.includes(process.env.FRONTEND_URL)) {
+if (
+  process.env.FRONTEND_URL &&
+  !allowedOrigins.includes(process.env.FRONTEND_URL)
+) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
@@ -37,7 +40,7 @@ app.use(
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       } else {
-        return callback(new Error('Not allowed by CORS'));
+        return callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
