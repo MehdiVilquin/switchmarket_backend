@@ -15,6 +15,8 @@ var additivesRouter = require("./routes/additives");
 var labelsRouter = require("./routes/labels");
 const effectsRouter = require("./routes/effects");
 var newsRouter = require("./routes/news");
+var contributionsRouter = require("./routes/contributions");
+
 
 var app = express();
 
@@ -41,5 +43,7 @@ app.use("/additives", additivesRouter);
 app.use("/labels", labelsRouter);
 app.use("/effects", effectsRouter);
 app.use("/news", newsRouter);
+app.use("/contributions", contributionsRouter);
+
 
 module.exports = app;
