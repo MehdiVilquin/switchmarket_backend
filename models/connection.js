@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const connectionString = process.env.CONNECTION_STRING;
 
 mongoose
-  .connect(connectionString, { connectTimeoutMS: 22000 })
+  .connect(connectionString, { connectTimeoutMS: 30000 })
   .then(async () => {
     console.log("✅ Database connected");
 
